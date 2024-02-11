@@ -19,6 +19,7 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
             margin-top: 20px;
+            position: relative;
         }
         h1, h2 {
             text-align: center;
@@ -26,37 +27,42 @@
         }
         .section {
             margin-top: 30px;
+            text-align: center;
         }
         .image-container {
-            width: 30%;
+            width: 50%;
+            margin: 0 auto;
             border-radius: 5px;
             box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
         }
         .image-container img {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.3s ease;
+            margin: 0 auto;
         }
-        .image-container:hover img {
-            transform: scale(1.1);
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: white;
+            font-size: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            z-index: 1;
         }
-        .github-link {
-            text-align: center;
-            margin-top: 20px;
+        .prev {
+            left: 10px;
         }
-        .github-link a {
-            text-decoration: none;
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .github-link a:hover {
-            background-color: #555;
+        .next {
+            right: 10px;
         }
     </style>
 </head>
@@ -67,20 +73,10 @@
         <div class="section">
             <h2>Dataset</h2>
             <div class="images">
-                <div class="image-container">
+                <div class="image-container" id="dataset">
                     <img src="dataset/dataset_image1.jpg" alt="Dataset Image 1">
-                </div>
-                <div class="image-container">
-                    <img src="dataset/dataset_image2.jpg" alt="Dataset Image 2">
-                </div>
-                <div class="image-container">
-                    <img src="dataset/dataset_image3.png" alt="Dataset Image 3">
-                </div>
-                <div class="image-container">
-                    <img src="dataset/dataset_image4.jpg" alt="Dataset Image 4">
-                </div>
-                <div class="image-container">
-                    <img src="dataset/dataset_image5.jpg" alt="Dataset Image 5">
+                    <span class="prev" onclick="prevImage('dataset', 0)">&#10094;</span>
+                    <span class="next" onclick="nextImage('dataset', 0)">&#10095;</span>
                 </div>
             </div>
         </div>
@@ -88,20 +84,10 @@
         <div class="section">
             <h2>Results</h2>
             <div class="images">
-                <div class="image-container">
+                <div class="image-container" id="results">
                     <img src="results/rez1.png" alt="Result Image 1">
-                </div>
-                <div class="image-container">
-                    <img src="results/rez2.png" alt="Result Image 2">
-                </div>
-                <div class="image-container">
-                    <img src="results/rez3.png" alt="Result Image 3">
-                </div>
-                <div class="image-container">
-                    <img src="results/rez4.png" alt="Result Image 4">
-                </div>
-                <div class="image-container">
-                    <img src="results/rez5.png" alt="Result Image 5">
+                    <span class="prev" onclick="prevImage('results', 0)">&#10094;</span>
+                    <span class="next" onclick="nextImage('results', 0)">&#10095;</span>
                 </div>
             </div>
         </div>
@@ -110,5 +96,47 @@
             <a href="https://github.com/yourusername/Gen-AI-Challenge-Info">View on GitHub</a>
         </div>
     </div>
+
+    <script>
+        var datasetImages = [
+            "dataset/dataset_image1.jpg",
+            "dataset/dataset_image2.jpg",
+            "dataset/dataset_image3.png",
+            "dataset/dataset_image4.jpg",
+            "dataset/dataset_image5.jpg"
+        ];
+
+        var resultsImages = [
+            "results/rez1.png",
+            "results/rez2.png",
+            "results/rez3.png",
+            "results/rez4.png",
+            "results/rez5.png"
+        ];
+
+        function prevImage(containerId, currentIndex) {
+            var container = document.getElementById(containerId);
+            var images = container.getElementsByTagName('img');
+
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(container, currentIndex);
+        }
+
+        function nextImage(containerId, currentIndex) {
+            var container = document.getElementById(containerId);
+            var images = container.getElementsByTagName('img');
+
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(container, currentIndex);
+        }
+
+        function showImage(container, index) {
+            var images = container.getElementsByTagName('img');
+            for (var i = 0; i < images.length; i++) {
+                images[i].style.display = 'none';
+            }
+            images[index].style.display = 'block';
+        }
+    </script>
 </body>
 </html>
