@@ -97,23 +97,23 @@
         <div class="github-link">
             <a href="https://github.com/NicolaIonita230632/NicolaIonita230632.github.io" class="github-button">View on GitHub</a>
         </div>        
-        <p>In this project I created a Stable Difussion XL model that I fine tuned on a dataset I created using Google Colabs</p>
+        <p>In this project, I created a Stable Diffusion XL model that I fine-tuned on a dataset I created using Google Colab.</p>
         <p>During the course of the project, I faced a multitude of obstacles while endeavoring to train an AI for image generation based on the provided dataset. The tutorials I relied on turned out to be more problematic than anticipated, with two-thirds of them either demanding memberships or presenting challenges beyond my initial expectations. It was a frustrating and often confusing experience, to say the least. Despite the setbacks, I persevered in my search for a viable solution and eventually stumbled upon a tutorial that showed some promise. Although the results it yielded weren't exactly what we had hoped for, they still represented a small victory.</p>
         <div class="github-link">
             <a href="https://blog.segmind.com/finetune-sdxl-dreambooth/" style="color: #00FF00;">The tutorial I followed</a>
         </div>
         <div class="code-container">
             <pre><code>
-    <span style="color: green;">//We first need to have python installed and a have access to a good GPU (15GB+ VRAM recommended)
-    //Then we need to create an account on facehugger, and create a write token for us to use up ahead
-    //Create the dataset and import it to a folder named images
+    <span style="color: green;">//We first need to have Python installed and have access to a good GPU (15GB+ VRAM recommended).
+    //Then we need to create an account on Facehugger and create a write token for us to use up ahead.
+    //Create the dataset and import it to a folder named images.
     //Now we can start.</span>
     
     <span style="color: green">//We need to install autotrain advanced:</span>
-    <span style="color: rgb(240, 128, 0);">!pip install -U -q autotrain-advanced
+    <span style="color: rgb(240, 128, 0);">!pip install -U -q autotrain-advanced</span>
     
-    <span style="color: green">//after that's done, we have to configure project config file</span>
-    <span style="color: green;">//Here, we can set the facehugger token, project name as well as specify the model we are going to use, in our case: stable-diffusion-xl-base-1.0</span>
+    <span style="color: green">//After that's done, we have to configure the project config file.</span>
+    <span style="color: green;">//Here, we can set the Facehugger token, project name as well as specify the model we are going to use, in our case: stable-diffusion-xl-base-1.0.</span>
     
     import os
     
@@ -125,8 +125,8 @@
     
     //@markdown ---
     //@markdown #### Push to Hub?
-    //@markdown Use these only if you want to push your trained model to a private repo in your Hugging Face Account
-    //@markdown If you dont use these, the model will be saved in Google Colab and you are required to download it manually.
+    //@markdown Use these only if you want to push your trained model to a private repo in your Hugging Face Account.
+    //@markdown If you don't use these, the model will be saved in Google Colab and you are required to download it manually.
     //@markdown Please enter your Hugging Face write token. The trained model will be saved to your Hugging Face account.
     //@markdown You can find your token here: https://huggingface.co/settings/tokens
     push_to_hub = True # @param ["False", "True"] {type:"raw"}
@@ -163,7 +163,7 @@
     os.environ["TRAIN_TEXT_ENCODER"] = str(train_text_encoder)
     os.environ["GRADIENT_CHECKPOINTING"] = str(gradient_checkpointing)
     
-    <span style="color: green;">//After that, we have to configure the parameters relating to the batch size, resolution etc. then start the autotrainer:</span>
+    <span style="color: green;">//After that, we have to configure the parameters relating to the batch size, resolution, etc., then start the autotrainer:</span>
     
     !autotrain dreambooth \
     --model ${MODEL_NAME} \
@@ -180,8 +180,8 @@
     $( [[ "$USE_8BIT_ADAM" == "True" ]] && echo "--use-8bit-adam" ) \
     $( [[ "$PUSH_TO_HUB" == "True" ]] && echo "--push-to-hub --token ${HF_TOKEN} --repo-id ${REPO_ID}" )
     
-    <span style="color: green;">//in my case. i had to delete the --gradient-accumulation as the main program didnt see it as a possible argument but this may vary on your hardware/software and instalation.</span>
-    <span style="color: green;">//finally, we can run the inference code, that lets us compile everything.</span>
+    <span style="color: green;">//In my case, I had to delete the --gradient-accumulation as the main program didn't see it as a possible argument, but this may vary on your hardware/software and installation.</span>
+    <span style="color: green;">//Finally, we can run the inference code, that lets us compile everything.</span>
     
     from diffusers import DiffusionPipeline
     import torch
@@ -197,7 +197,7 @@
     pipe.load_lora_weights("dhanushreddy29/sdxl-dreambooth-shirts")
     pipe.to("cuda")
     
-    <span style="color: green;">//in the final step we can run a prompt command, that tells the program to start generating images based on prompts and parameters</span>
+    <span style="color: green;">//In the final step, we can run a prompt command, that tells the program to start generating images based on prompts and parameters.</span>
     
     prompt = "Imagine an Ice Peashooter"
     neg_prompt = "out of frame, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, out of frame, poorly drawn face, mutation, deformed, blurry, bad anatomy, bad proportions, cloned face, disfigured"
@@ -254,8 +254,7 @@
                 </div>
             </div>
         </div>
-        <p>As you can see, the results aren't that closely related to the pictures in the dataset. I tried other options, including the JupyterLab
-environment. The problem i faced was that any Pytorch drivers i installed couldn't see A6000 GPU, even if I installed it with the package coresponding to the Cuda drivers running the A6000. (12.2)</p>
+        <p>As you can see, the results aren't closely related to the pictures in the dataset. I tried other options, including the JupyterLab environment. The problem I faced was that any PyTorch drivers I installed couldn't see the A6000 GPU, even if I installed it with the package corresponding to the CUDA drivers running the A6000 (12.2).</p>
     </div>
 
     <div class="popup" id="imagePopup" onclick="closePopup()">
