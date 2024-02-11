@@ -27,7 +27,6 @@
         }
         .section {
             margin-top: 30px;
-            text-align: center;
         }
         .image-container {
             width: 50%;
@@ -75,8 +74,8 @@
             <div class="images">
                 <div class="image-container" id="dataset">
                     <img src="dataset/dataset_image1.jpg" alt="Dataset Image 1">
-                    <span class="prev" onclick="prevImage('dataset', 0)">&#10094;</span>
-                    <span class="next" onclick="nextImage('dataset', 0)">&#10095;</span>
+                    <span class="prev" onclick="prevImage('dataset')">&#10094;</span>
+                    <span class="next" onclick="nextImage('dataset')">&#10095;</span>
                 </div>
             </div>
         </div>
@@ -86,8 +85,8 @@
             <div class="images">
                 <div class="image-container" id="results">
                     <img src="results/rez1.png" alt="Result Image 1">
-                    <span class="prev" onclick="prevImage('results', 0)">&#10094;</span>
-                    <span class="next" onclick="nextImage('results', 0)">&#10095;</span>
+                    <span class="prev" onclick="prevImage('results')">&#10094;</span>
+                    <span class="next" onclick="nextImage('results')">&#10095;</span>
                 </div>
             </div>
         </div>
@@ -98,6 +97,11 @@
     </div>
 
     <script>
+        var currentIndices = {
+            "dataset": 0,
+            "results": 0
+        };
+
         var datasetImages = [
             "dataset/dataset_image1.jpg",
             "dataset/dataset_image2.jpg",
@@ -114,20 +118,16 @@
             "results/rez5.png"
         ];
 
-        function prevImage(containerId, currentIndex) {
+        function prevImage(containerId) {
             var container = document.getElementById(containerId);
-            var images = container.getElementsByTagName('img');
-
-            currentIndex = (currentIndex - 1 + images.length) % images.length;
-            showImage(container, currentIndex);
+            currentIndices[containerId] = (currentIndices[containerId] - 1 + datasetImages.length) % datasetImages.length;
+            showImage(container, currentIndices[containerId]);
         }
 
-        function nextImage(containerId, currentIndex) {
+        function nextImage(containerId) {
             var container = document.getElementById(containerId);
-            var images = container.getElementsByTagName('img');
-
-            currentIndex = (currentIndex + 1) % images.length;
-            showImage(container, currentIndex);
+            currentIndices[containerId] = (currentIndices[containerId] + 1) % datasetImages.length;
+            showImage(container, currentIndices[containerId]);
         }
 
         function showImage(container, index) {
